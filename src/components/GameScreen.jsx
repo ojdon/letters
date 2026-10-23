@@ -153,26 +153,18 @@ export default function GameScreen({
   }, [tier, profile.solved])
 
   useEffect(() => {
-    if (round.phase !== 'correct') return undefined
-    if (solvedRoundRef.current === round.roundKey) return undefined
+    if (round.phase !== 'correct') return
+    if (solvedRoundRef.current === round.roundKey) return
     solvedRoundRef.current = round.roundKey
 
-    const { onRecordSolved: recordSolved, chime: playChime, speak: say, stars } = latest.current
+    const { onRecordSolved: recordSolved, chime: playChime, stars } = latest.current
     const isMilestone = (stars + 1) % 5 === 0
     recordSolved(round.word.id)
     playChime(isMilestone ? 'milestone' : 'correct')
     setMilestone(isMilestone)
     setBurst((value) => value + 1)
     setFeedback('Następne słowo za chwilę…')
-
-    const praise = isMilestone
-      ? `Pięć gwiazdek! Brawo, ${profile.name}!`
-      : `Brawo, ${profile.name}!`
-    const timer = window.setTimeout(() => {
-      say(`${praise} ${round.word.word}!`, { rate: 0.78 })
-    }, 280)
-    return () => window.clearTimeout(timer)
-  }, [round.phase, round.roundKey, round.word, profile.name, settingsOpen])
+  }, [round.phase, round.roundKey, round.word])
 
   useEffect(() => {
     if (round.phase !== 'correct' || settingsOpen) return undefined
@@ -212,12 +204,12 @@ export default function GameScreen({
   }, [round.phase, round.roundKey, round.attempts])
 
   useEffect(() => {
-    if (settingsOpen) return undefined
+    if (settingsOpen || round.phase !== 'playing') return undefined
     const timer = window.setTimeout(() => {
       latest.current.speak(round.word.word, { rate: 0.78 })
     }, 500)
     return () => window.clearTimeout(timer)
-  }, [round.roundKey, round.word, settingsOpen])
+  }, [round.roundKey, round.word, round.phase, settingsOpen])
 
   useEffect(() => {
     function handleKeyDown(event) {
