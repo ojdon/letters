@@ -14,10 +14,10 @@ import LetterTile, { TileFace } from './LetterTile'
 import SpeakableText from './SpeakableText'
 
 function slotSizeFor(length) {
-  if (length >= 8) return 'clamp(28px, 8.4vw, 50px)'
-  if (length >= 6) return 'clamp(31px, 9vw, 58px)'
-  if (length >= 5) return 'clamp(38px, 10.5vw, 68px)'
-  return 'clamp(48px, 12.5vw, 76px)'
+  if (length >= 8) return 'clamp(30px, 8.6vw, 52px)'
+  if (length >= 6) return 'clamp(36px, 10.5vw, 60px)'
+  if (length >= 5) return 'clamp(44px, 12vw, 68px)'
+  return 'clamp(56px, 15.5vw, 80px)'
 }
 
 export default function SpellingBoard({
@@ -147,7 +147,7 @@ export default function SpellingBoard({
 
         {round.phase === 'playing' && (
           <>
-            <div className="mt-1 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            <div className="mt-1 flex flex-wrap items-center justify-center gap-1">
               {round.bank.map((tile) => (
                 <LetterTile
                   key={tile.id}

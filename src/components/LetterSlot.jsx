@@ -28,7 +28,9 @@ export default function LetterSlot({ index, tile, size, compact, disabled, onRem
       {tile ? (
         <span
           className={`font-extrabold leading-none text-[var(--accent-deep)] ${
-            compact ? 'text-lg sm:text-3xl' : 'text-2xl sm:text-4xl'
+            compact
+              ? 'text-[clamp(1.25rem,4.8vw,2rem)]'
+              : 'text-[clamp(2rem,7vw,3rem)]'
           }`}
         >
           {tile.letter}
